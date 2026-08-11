@@ -1,7 +1,13 @@
 "use client";
 
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { useAccount, useBalance, useChainId, useSwitchChain } from "wagmi";
+import {
+  useAccount,
+  useBalance,
+  useChainId,
+  useSwitchChain,
+  useSignMessage,
+} from "wagmi";
 import { sepolia } from "wagmi/chains";
 
 export default function Home() {
@@ -11,6 +17,21 @@ export default function Home() {
   const { switchChain } = useSwitchChain();
 
   console.log("balance:", balance);
+
+  // Message signing: no gas, no transaction, nothing goes on-chain.
+  // `signature` is the result, `isPending` is true while MetaMask is open,
+  // `error` is set if the user rejects the request.
+  const {
+    signMessage,
+    data: signature,
+    isPending,
+    error,
+    reset,
+  } = useSignMessage();
+
+  const message =
+    "Olá! Esta é minha primeira mensagem assinada com a carteira.";
+
   return (
     <main style={{ padding: "40px", fontFamily: "sans-serif" }}>
       <h1>App Blockchain com RainbowKit</h1>
@@ -45,6 +66,38 @@ export default function Home() {
               Trocar para Sepolia (Testnet)
             </button>
           )}
+          {/* --- New: sign a message --- */}
+          <div style={{ marginTop: "40px" }}>
+            <h2 style={{ fontSize: "18px" }}>Assinar uma mensagem</h2>
+            <p style={{ color: "#666" }}>Mensagem: &quot;{message}&quot;</p>
+
+            <button
+              onClick={() => {
+                reset(); // clears any previous signature or error
+                signMessage({ message });
+              }}
+              disabled={isPending}
+              style={{
+                marginTop: "10px",
+                padding: "10px 20px",
+                cursor: isPending ? "not-allowed" : "pointer",
+              }}
+            >
+              {isPending ? "Confirme na carteira..." : "Assinar mensagem"}
+            </button>
+
+            {signature && (
+              <p style={{ marginTop: "15px", wordBreak: "break-all" }}>
+                <strong>Assinatura:</strong> {signature}
+              </p>
+            )}
+
+            {error && (
+              <p style={{ marginTop: "15px", color: "crimson" }}>
+                Não foi possível assinar (você cancelou?).
+              </p>
+            )}
+          </div>
         </div>
       )}
     </main>
