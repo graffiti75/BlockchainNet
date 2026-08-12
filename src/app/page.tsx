@@ -5,6 +5,8 @@ import { useAccount, useBalance, useChainId, useSwitchChain } from "wagmi";
 import { sepolia } from "wagmi/chains";
 import { SendEth } from "./send-eth";
 import { SignMessage } from "./sign-message";
+import { PriceFeed } from "./price-feed";
+import { EthBrlPrice } from "./eth-brl-price";
 
 export default function Home() {
   const { address, isConnected } = useAccount();
@@ -49,6 +51,8 @@ export default function Home() {
           )}
           <SignMessage />
           <SendEth />
+          <PriceFeed />
+          <EthBrlPrice />
         </div>
       )}
     </main>
