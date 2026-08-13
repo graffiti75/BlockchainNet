@@ -7,6 +7,8 @@ import { SendEth } from "./send-eth";
 import { SignMessage } from "./sign-message";
 import { PriceFeed } from "./price-feed";
 import { EthBrlPrice } from "./eth-brl-price";
+import { DeployCounter } from "./deploy-counter";
+import { Counter } from "./counter";
 
 export default function Home() {
   const { address, isConnected } = useAccount();
@@ -49,10 +51,12 @@ export default function Home() {
               Trocar para Sepolia (Testnet)
             </button>
           )}
+          <DeployCounter />
+          <Counter />
           <SignMessage />
           <SendEth />
-          <PriceFeed />
-          <EthBrlPrice />
+          {/* <PriceFeed /> */}
+          {/* <EthBrlPrice /> */}
         </div>
       )}
     </main>
