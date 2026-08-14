@@ -9,6 +9,7 @@ import { PriceFeed } from "./price-feed";
 import { EthBrlPrice } from "./eth-brl-price";
 import { DeployCounter } from "./deploy-counter";
 import { Counter } from "./counter";
+import { MessageBoard } from "./message-board";
 
 export default function Home() {
   const { address, isConnected } = useAccount();
@@ -51,6 +52,7 @@ export default function Home() {
               Trocar para Sepolia (Testnet)
             </button>
           )}
+          <MessageBoard />
           <DeployCounter />
           <Counter />
           <SignMessage />
