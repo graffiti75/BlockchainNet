@@ -9,7 +9,8 @@ import {
 import { sepolia } from "wagmi/chains";
 
 // Paste your deployed Counter address here (Remix shows it after "Deploy").
-const COUNTER_ADDRESS = "0xd93c150c972012ca91ee3839b6ab1ca9327e6f27"; // e.g. "0x...."
+// const COUNTER_ADDRESS = "0xd93c150c972012ca91ee3839b6ab1ca9327e6f27"; // Address given by deploy-counter.tsx
+const COUNTER_ADDRESS = "0x9898F2c188e8881616afec93971FDe71291e1947"; // Address given by foundry
 
 const isConfigured =
   COUNTER_ADDRESS.startsWith("0x") && COUNTER_ADDRESS.length === 42;
