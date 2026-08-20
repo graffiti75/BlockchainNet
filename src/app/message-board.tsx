@@ -5,6 +5,7 @@ import {
   useReadContract,
   useWriteContract,
   useWaitForTransactionReceipt,
+  useWatchContractEvent,
 } from "wagmi";
 import { sepolia } from "wagmi/chains";
 
@@ -80,6 +81,22 @@ export function MessageBoard() {
       refetchSender();
     }
   }, [isSuccess, refetchMessage, refetchSender]);
+
+  // Live: subscribe to the MessagePosted event. Fires whenever the message
+  // changes on-chain — even if someone else posts, or you use Etherscan.
+  useWatchContractEvent({
+    address: isConfigured
+      ? (MESSAGE_BOARD_ADDRESS as `0x${string}`)
+      : undefined,
+    abi: messageBoardAbi,
+    eventName: "MessagePosted",
+    chainId: sepolia.id,
+    enabled: isConfigured,
+    onLogs() {
+      refetchMessage();
+      refetchSender();
+    },
+  });
 
   const busy = isPending || isConfirming;
 
